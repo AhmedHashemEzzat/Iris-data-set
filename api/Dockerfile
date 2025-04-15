@@ -1,0 +1,14 @@
+FROM python:3.10-slim
+
+LABEL maintainer="https://github.com/AchilleasKn"
+
+WORKDIR /app
+
+COPY requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . . 
+
+
+CMD ["python", "api.py"]

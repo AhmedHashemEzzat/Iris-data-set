@@ -1,0 +1,22 @@
+services:
+  flask-api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: iris_api
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./api:/app
+
+  streamlit-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: iris_streamlit
+    ports:
+      - "8501:8501"
+    volumes:
+      - .:/app
+    depends_on:
+      - flask-api
