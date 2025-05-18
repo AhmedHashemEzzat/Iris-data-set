@@ -6,3 +6,5 @@ scipy==1.10.1
 requests==2.28.2
 streamlit==1.20.0
 werkzeug==2.2.3
+flask_cors==3.0.10
+python-dotenv==1.0.1

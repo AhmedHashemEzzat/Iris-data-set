@@ -1,22 +1,41 @@
+version: '3.8'
+
 services:
-  flask-api:
+  
+
+  streamlit_api:
     build:
       context: ./api
-      dockerfile: Dockerfile
-    container_name: iris_api
+      dockerfile: Dockerfile.streamlit
     ports:
       - "5000:5000"
     volumes:
-      - ./api:/app
+      - ./api/Model.pkl:/app/Model.pkl
 
-  streamlit-app:
+  streamlit_app:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: iris_streamlit
     ports:
       - "8501:8501"
     volumes:
-      - .:/app
-    depends_on:
-      - flask-api
+      - ./api/Model.pkl:/app/api/Model.pkl
+    environment:
+      - MODEL_PATH=api/Model.pkl
+
+  react_ui:
+    build:
+      context: ./iris-react-ui
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+  flask_api:
+    build:
+      context: ./api-react
+      dockerfile: Dockerfile.flask
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./api/Model.pkl:/app/api/Model.pkl
+    env_file:
+      - ./api-react/.env
